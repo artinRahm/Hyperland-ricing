@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete Hyprland configuration guide - keybindings, window rules, animations, and advanced settings">
+    <meta name="theme-color" content="#fafafa">
+    <title>Configuration - Hyprland Ricing Guide</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </div>
+
+    <header class="site-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                    <path d="M6 7h12M6 11h8M6 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                </svg>
+                <span class="logo-text">HyprRice</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="arch-guide.html">Arch Linux</a></li>
+                <li><a href="nixos-guide.html">NixOS</a></li>
+                <li><a href="config.html" class="active">Configuration</a></li>
+                <li><a href="plugins.html">Plugins & Tools</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="guide-layout">
+            <aside class="guide-sidebar" id="guideSidebar">
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <nav class="sidebar-nav">
+                    <ul class="sidebar-links">
+                        <li><a href="#structure" class="sidebar-link">Config Structure</a></li>
+                        <li><a href="#keybindings" class="sidebar-link">Keybindings</a></li>
+                        <li><a href="#window-rules" class="sidebar-link">Window Rules</a></li>
+                        <li><a href="#animations" class="sidebar-link">Animations</a></li>
+                        <li><a href="#gaps-borders" class="sidebar-link">Gaps & Borders</a></li>
+                        <li><a href="#monitors" class="sidebar-link">Monitors</a></li>
+                        <li><a href="#input" class="sidebar-link">Input Settings</a></li>
+                        <li><a href="#advanced" class="sidebar-link">Advanced</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <div class="guide-content">
+                <header class="page-header">
+                    <div class="container">
+                        <span class="badge badge-config" style="margin-bottom: var(--space-md);">Configuration</span>
+                        <h1>Hyprland Configuration</h1>
+                        <p>Master your hyprland.conf - keybindings, window rules, animations, and advanced settings</p>
+                    </div>
+                </header>
+
+                <div class="container">
+                    <section id="structure" class="guide-section">
+                        <h2>Config Structure</h2>
+                        <p>Hyprland uses a single configuration file at <code>~/.config/hypr/hyprland.conf</code>. The config is organized into sections:</p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span>hyprland.conf</span></div>
+                            <pre><code># Monitor configuration
+monitor=eDP-1,preferred,auto,1
+monitor=HDMI-A-1,1920x1080@60,1920x0,1
+
+# Input settings
+input {
+    kb_layout = us
+    kb_variant =
+    kb_model =
+    kb_options = caps:escape
+    kb_repeat_rate = 25
+    kb_repeat_delay = 600
+    sensitivity = 0
+    accel_profile = flat
+}
+
+# General settings
+general {
+    gaps_in = 5
+    gaps_out = 10
+    border_size = 2
+    col.active_border = rgba(89b4faee) rgba(89b4faee) 45deg
+    col.inactive_border = rgba(313244ee)
+    layout = dwindle
+    allow_tearing = false
+}
+
+# Decoration
+decoration {
+    rounding = 10
+    blur {
+        enabled = true
+        size = 8
+        passes = 3
+        new_optimizations = true
+    }
+    drop_shadow = true
+    shadow_range = 4
+    shadow_render_power = 3
+    col.shadow = rgba(1a1a2eaa)
+}
+
+# Animations
+animations {
+    enabled = yes
+    bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+    animation = windows, 1, 7, myBezier
+    animation = windowsOut, 1, 7, default, popin 80%
+    animation = border, 1, 10, default
+    animation = borderangle, 1, 8, default
+    animation = fade, 1, 7, default
+    animation = workspaces, 1, 6, default
+}
+
+# Keybindings (see Keybindings section)
+$mainMod = SUPER
+
+bind = $mainMod, Q, killactive,
+bind = $mainMod, Return, exec, kitty
+bind = $mainMod, D, exec, rofi -show drun
+
+# Window rules (see Window Rules section)
+windowrulev2 = float, class:^(pavucontrol)$
+windowrulev2 = size 800 600, class:^(pavucontrol)$
+windowrulev2 = center, class:^(pavucontrol)$</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="keybindings" class="guide-section">
+                        <h2>Essential Keybindings</h2>
+                        <p>Define your workflow with custom keybindings. <code>$mainMod</code> is typically SUPER (Windows key).</p>
+
+                        <h3>Window Management</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Window keybindings</span></div>
+                            <pre><code># Close window
+bind = $mainMod, Q, killactive,
+
+# Move focus
+bind = $mainMod, left, movefocus, l
+bind = $mainMod, right, movefocus, r
+bind = $mainMod, up, movefocus, u
+bind = $mainMod, down, movefocus, d
+
+# Swap windows
+bind = $mainMod SHIFT, left, swapwindow, l
+bind = $mainMod SHIFT, right, swapwindow, r
+bind = $mainMod SHIFT, up, swapwindow, u
+bind = $mainMod SHIFT, down, swapwindow, d
+
+# Fullscreen
+bind = $mainMod, F, fullscreen, 1
+bind = $mainMod SHIFT, F, fullscreen, 0
+
+# Toggle floating
+bind = $mainMod SHIFT, space, togglefloating,
+
+# Move/resize floating
+bind = $mainMod, mouse_down, moveresize, move
+bind = $mainMod SHIFT, mouse_down, moveresize, resize</code></pre>
+                        </div>
+
+                        <h3>Workspaces</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Workspace keybindings</span></div>
+                            <pre><code># Switch workspace
+bind = $mainMod, 1, workspace, 1
+bind = $mainMod, 2, workspace, 2
+bind = $mainMod, 3, workspace, 3
+bind = $mainMod, 4, workspace, 4
+bind = $mainMod, 5, workspace, 5
+
+# Move window to workspace
+bind = $mainMod SHIFT, 1, movetoworkspace, 1
+bind = $mainMod SHIFT, 2, movetoworkspace, 2
+bind = $mainMod SHIFT, 3, movetoworkspace, 3
+bind = $mainMod SHIFT, 4, movetoworkspace, 4
+bind = $mainMod SHIFT, 5, movetoworkspace, 5
+
+# Workspace navigation
+bind = $mainMod, Tab, workspace, e+1
+bind = $mainMod SHIFT, Tab, workspace, e-1
+
+# Special workspace (scratchpad)
+bind = $mainMod, S, togglespecialworkspace, magic
+bind = $mainMod SHIFT, S, movetoworkspace, special:magic</code></pre>
+                        </div>
+
+                        <h3>Applications</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>App launchers</span></div>
+                            <pre><code>$terminal = kitty
+$menu = rofi -show drun
+$browser = firefox
+$files = thunar
+
+bind = $mainMod, Return, exec, $terminal
+bind = $mainMod, D, exec, $menu
+bind = $mainMod SHIFT, D, exec, $browser
+bind = $mainMod, E, exec, $files
+
+# Screenshot
+bind = , Print, exec, grim -g "$(slurp)" - | wl-copy
+bind = SHIFT, Print, exec, grim - | wl-copy
+
+# Audio
+bind = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bind = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="window-rules" class="guide-section">
+                        <h2>Window Rules</h2>
+                        <p>Window rules (v2 syntax) let you control window behavior automatically.</p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span>Window rules examples</span></div>
+                            <pre><code># Float specific apps
+windowrulev2 = float, class:^(pavucontrol|nm-connection-editor|blueman-manager)$
+windowrulev2 = float, title:^(Picture-in-Picture)$
+
+# Size and position for floating windows
+windowrulev2 = size 800 600, class:^(pavucontrol)$
+windowrulev2 = center, class:^(pavucontrol)$
+
+# Make specific apps fullscreen
+windowrulev2 = fullscreen, class:^(firefox|chrome)$ title:^(.* - YouTube)$
+
+# Assign apps to workspaces
+windowrulev2 = workspace 2, class:^(firefox|chrome|brave)$
+windowrulev2 = workspace 3, class:^(code|code-oss)$
+windowrulev2 = workspace 4, class:^(discord|slack|telegram)$
+windowrulev2 = workspace 5, class:^(spotify|mpv)$
+
+# Opacity rules
+windowrulev2 = opacity 0.95 0.95, class:^(kitty|alacritty)$
+windowrulev2 = opacity 0.9 0.9, class:^(rofi|wofi)$
+
+# Disable rounding for specific apps
+windowrulev2 = rounding 0, class:^(firefox|chrome)$
+
+# No animations for specific apps
+windowrulev2 = animation none, class:^(mpv|vlc)$
+
+# Pin to all workspaces
+windowrulev2 = pin, class:^(polybar|waybar)$</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="animations" class="guide-section">
+                        <h2>Animations</h2>
+                        <p>Customize animations with bezier curves for smooth transitions.</p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span>Animation config</span></div>
+                            <pre><code>animations {
+    enabled = yes
+
+    # Custom bezier curves
+    bezier = smooth, 0.25, 0.46, 0.45, 0.94
+    bezier = snappy, 0.05, 0.9, 0.1, 1.05
+    bezier = bounce, 0.68, -0.55, 0.27, 1.55
+    bezier = linear, 0, 0, 1, 1
+
+    # Window animations
+    animation = windows, 1, 7, smooth
+    animation = windowsOut, 1, 5, smooth, popin 80%
+    animation = border, 1, 10, linear
+    animation = borderangle, 1, 8, linear
+    animation = fade, 1, 7, smooth
+    animation = workspaces, 1, 6, smooth
+
+    # Special workspace animation
+    animation = specialWorkspace, 1, 10, bounce
+
+    # Disable all animations (for performance)
+    # enabled = no
+}</code></pre>
+                        </div>
+
+                        <div class="note-box tip">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            <div>
+                                <strong>Tip:</strong> Use <code>hyprctl animation</code> to test animations live. Disable with <code>enabled = no</code> for maximum performance.
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="gaps-borders" class="guide-section">
+                        <h2>Gaps & Borders</h2>
+                        <p>Fine-tune spacing and window borders for your perfect setup.</p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span>Gaps & borders</span></div>
+                            <pre><code>general {
+    # Inner gaps (between windows)
+    gaps_in = 5
+
+    # Outer gaps (window to screen edge)
+    gaps_out = 10
+
+    # Workspace-specific gaps
+    # workspace = 1, gaps_in:10, gaps_out:20
+
+    # Border size
+    border_size = 2
+
+    # Active window border (gradient)
+    col.active_border = rgba(89b4faee) rgba(f5c2e7ee) 45deg
+
+    # Inactive window border
+    col.inactive_border = rgba(313244ee)
+
+    # Grouped window border (tabbed/tiled groups)
+    col.group_border = rgba(89b4faee) rgba(f5c2e7ee) 45deg
+
+    # Urgent window border (notifications)
+    col.urgent_border = rgba(f38ba8ee)
+
+    # Resize border
+    resize_on_border = true
+    extend_border_grab_area = 15
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="monitors" class="guide-section">
+                        <h2>Monitor Configuration</h2>
+                        <p>Configure single or multi-monitor setups with proper scaling and positioning.</p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span>Monitor config</span></div>
+                            <pre><code># Single monitor
+monitor=eDP-1,preferred,auto,1
+
+# Dual monitor (laptop + external)
+monitor=eDP-1,1920x1080@60,0x0,1
+monitor=HDMI-A-1,2560x1440@144,1920x0,1
+
+# High DPI scaling
+monitor=eDP-1,preferred,auto,1.5
+monitor=DP-1,3840x2160@60,0x0,2
+
+# Mirror mode
+monitor=eDP-1,preferred,auto,1,mirror,HDMI-A-1
+
+# Disable monitor
+# monitor=HDMI-A-1,disable
+
+# Variable refresh rate (VRR)
+monitor=eDP-1,preferred,auto,1,vrr,1
+
+# Transform (rotation)
+# monitor=DP-1,preferred,auto,1,transform,1  # 90°
+# monitor=DP-1,preferred,auto,1,transform,2  # 180°</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="input" class="guide-section">
+                        <h2>Input Settings</h2>
+                        <p>Configure keyboard, mouse, and touchpad behavior.</p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span>Input config</span></div>
+                            <pre><code>input {
+    # Keyboard
+    kb_layout = us
+    kb_variant = dvorak
+    kb_model =
+    kb_options = caps:escape,grp:alt_shift_toggle
+    kb_repeat_rate = 30
+    kb_repeat_delay = 250
+    kb_numlock = true
+
+    # Mouse
+    sensitivity = 0
+    accel_profile = flat
+    scroll_factor = 1
+    scroll_points = false
+    scroll_method = two_finger
+    tap-to-click = true
+    tap-and-drag = true
+    drag_lock = false
+    disable_while_typing = true
+    left_handed = false
+    natural_scroll = false
+
+    # Touchpad gestures
+    gesture_workspace_swipe = true
+    gesture_workspace_swipe_fingers = 3
+    gesture_workspace_swipe_distance = 300
+    gesture_workspace_swipe_invert = false
+
+    # Touchpad
+    touchpad {
+        natural_scroll = true
+        tap-to-click = true
+        tap-and-drag = true
+        drag_lock = false
+        disable_while_typing = true
+    }
+
+    # Tablet
+    tablet {
+        mapped_to_output = eDP-1
+    }
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="advanced" class="guide-section">
+                        <h2>Advanced Configuration</h2>
+                        <p>Power user settings for maximum control.</p>
+
+                        <h3>Environment Variables</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Environment</span></div>
+                            <pre><code>env = QT_QPA_PLATFORM,wayland
+env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
+env = GDK_BACKEND,wayland,x11
+env = CLUTTER_BACKEND,wayland
+env = SDL_VIDEODRIVER,wayland
+env = MOZ_ENABLE_WAYLAND,1
+env = XDG_CURRENT_DESKTOP,Hyprland
+env = XDG_SESSION_TYPE,wayland
+env = XDG_SESSION_DESKTOP,Hyprland</code></pre>
+                        </div>
+
+                        <h3>Miscellaneous</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Misc settings</span></div>
+                            <pre><code>general {
+    # Layout algorithm: dwindle | master
+    layout = dwindle
+
+    # Master layout settings
+    master_width_factor = 0.55
+
+    # Allow screen tearing (for games)
+    allow_tearing = false
+
+    # Focus follows mouse
+    focus_on_open = true
+    no_focus_fallback = false
+
+    # Cursor
+    cursor_inactive_timeout = 300
+    cursor_zoom_factor = 1.0
+    cursor_zoom_rigidity = 10
+
+    # Snap windows
+    snap {
+        enabled = true
+        distance = 20
+    }
+
+    # XWayland
+    xwayland {
+        force_zero_scaling = true
+    }
+
+    # Misc
+    inactive_alpha = 0.9
+    border_no_pixel = false
+}</code></pre>
+                        </div>
+
+                        <h3>Debugging</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Debug commands</span></div>
+                            <pre><code># Reload config
+bind = $mainMod SHIFT, R, reload
+
+# Debug log
+bind = $mainMod, F1, exec, hyprctl dispatch exec "[float] foot -e sh -c 'hyprctl monitors; read'"
+
+# Check config syntax
+# hyprctl reload
+
+# Get current config
+# hyprctl getoption general:gaps_in
+
+# List all options
+# hyprctl options</code></pre>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../index.html" class="logo">
+                        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                            <path d="M6 7h12M6 11h8M6 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        </svg>
+                        <span class="logo-text">HyprRice</span>
+                    </a>
+                    <p>The ultimate guide to ricing Hyprland on Arch Linux and NixOS</p>
+                </div>
+                <nav class="footer-nav">
+                    <h4>Guides</h4>
+                    <ul>
+                        <li><a href="arch-guide.html">Arch Linux</a></li>
+                        <li><a href="nixos-guide.html">NixOS</a></li>
+                        <li><a href="config.html">Configuration</a></li>
+                        <li><a href="plugins.html">Plugins & Tools</a></li>
+                    </ul>
+                </nav>
+                <nav class="footer-nav">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="troubleshooting.html">Troubleshooting</a></li>
+                        <li><a href="https://wiki.hyprland.org" target="_blank">Hyprland Wiki</a></li>
+                        <li><a href="https://github.com/hyprwm/Hyprland" target="_blank">GitHub</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 HyprRice. Built with Hyprland.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/navigation.js"></script>
+</body>
+</html>

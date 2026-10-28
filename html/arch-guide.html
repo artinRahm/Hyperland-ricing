@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete guide to installing and configuring Hyprland on Arch Linux">
+    <meta name="theme-color" content="#fafafa">
+    <title>Arch Linux Guide - Hyprland Ricing Guide</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </div>
+
+    <header class="site-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                    <path d="M6 7h12M6 11h8M6 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                </svg>
+                <span class="logo-text">HyprRice</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="arch-guide.html" class="active">Arch Linux</a></li>
+                <li><a href="nixos-guide.html">NixOS</a></li>
+                <li><a href="config.html">Configuration</a></li>
+                <li><a href="plugins.html">Plugins & Tools</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="guide-layout">
+            <aside class="guide-sidebar" id="guideSidebar">
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <nav class="sidebar-nav">
+                    <ul class="sidebar-links">
+                        <li><a href="#prerequisites" class="sidebar-link">Prerequisites</a></li>
+                        <li><a href="#installation" class="sidebar-link">Installation</a></li>
+                        <li><a href="#gpu-drivers" class="sidebar-link">GPU Drivers</a></li>
+                        <li><a href="#essential-packages" class="sidebar-link">Essential Packages</a></li>
+                        <li><a href="#configuration" class="sidebar-link">Configuration</a></li>
+                        <li><a href="#waybar" class="sidebar-link">Waybar Setup</a></li>
+                        <li><a href="#theming" class="sidebar-link">Theming</a></li>
+                        <li><a href="#autostart" class="sidebar-link">Autostart Apps</a></li>
+                        <li><a href="#troubleshooting" class="sidebar-link">Troubleshooting</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <div class="guide-content">
+                <header class="page-header">
+                    <div class="container">
+                        <span class="badge badge-arch" style="margin-bottom: var(--space-md);">Arch Linux</span>
+                        <h1>Arch Linux Installation Guide</h1>
+                        <p>Complete step-by-step guide to installing and configuring Hyprland on Arch Linux</p>
+                    </div>
+                </header>
+
+                <div class="container">
+                    <section id="prerequisites" class="guide-section">
+                        <h2>Prerequisites</h2>
+                        <p>Before installing Hyprland, ensure you have a working Arch Linux base system. If you haven't installed Arch yet, follow the <a href="https://wiki.archlinux.org/title/Installation_guide" target="_blank">official installation guide</a>.</p>
+
+                        <div class="note-box info">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            <div>
+                                <strong>Note:</strong> This guide assumes you have a working Arch Linux installation with a user account that has sudo privileges.
+                            </div>
+                        </div>
+
+                        <h3>System Requirements</h3>
+                        <ul>
+                            <li>Arch Linux (up to date: <code>sudo pacman -Syu</code>)</li>
+                            <li>Kernel 6.1+ (for best Wayland support)</li>
+                            <li>GPU with Mesa/Vulkan support (Intel, AMD, or NVIDIA)</li>
+                            <li>At least 2GB RAM (4GB+ recommended)</li>
+                        </ul>
+                    </section>
+
+                    <section id="installation" class="guide-section">
+                        <h2>Installing Hyprland</h2>
+
+                        <h3>Option 1: Stable Release (Recommended)</h3>
+                        <p>Install Hyprland from the official Arch repositories:</p>
+                        <pre><code>sudo pacman -S hyprland</code></pre>
+
+                        <h3>Option 2: Git Version (Latest Features)</h3>
+                        <p>For the latest features and fixes, install from AUR:</p>
+                        <pre><code># Using yay
+yay -S hyprland-git
+
+# Or using paru
+paru -S hyprland-git</code></pre>
+
+                        <div class="note-box warning">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                            <div>
+                                <strong>Warning:</strong> The git version may have breaking changes. Read the <a href="https://github.com/hyprwm/Hyprland/releases" target="_blank">release notes</a> before updating.
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="gpu-drivers" class="guide-section">
+                        <h2>GPU Drivers</h2>
+                        <p>Proper GPU drivers are essential for Wayland/Hyprland to work correctly.</p>
+
+                        <div class="driver-tabs">
+                            <button class="driver-tab active" data-driver="amd">AMD</button>
+                            <button class="driver-tab" data-driver="intel">Intel</button>
+                            <button class="driver-tab" data-driver="nvidia">NVIDIA</button>
+                            <button class="driver-tab" data-driver="vm">VM</button>
+                        </div>
+
+                        <div class="driver-content">
+                            <div class="driver-panel active" data-driver="amd">
+                                <h3>AMD (Radeon)</h3>
+                                <p>AMD has the best out-of-the-box Wayland support.</p>
+                                <pre><code>sudo pacman -S mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon</code></pre>
+                                <p>For newer GPUs, also install:</p>
+                                <pre><code>sudo pacman -S amdgpu-top</code></pre>
+                            </div>
+
+                            <div class="driver-panel" data-driver="intel">
+                                <h3>Intel (Integrated / Arc)</h3>
+                                <pre><code>sudo pacman -S mesa lib32-mesa vulkan-intel lib32-vulkan-intel intel-media-driver</code></pre>
+                                <p>For Intel Arc GPUs, ensure kernel 6.2+ and add <code>i915.force_probe=*</code> to kernel parameters if needed.</p>
+                            </div>
+
+                            <div class="driver-panel" data-driver="nvidia">
+                                <h3>NVIDIA (Proprietary)</h3>
+                                <p>NVIDIA requires additional configuration for Wayland.</p>
+                                <pre><code># Install drivers
+sudo pacman -S nvidia nvidia-utils lib32-nvidia-utils nvidia-settings
+
+# For DKMS (if using custom kernels)
+sudo pacman -S nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings</code></pre>
+
+                                <h4>Required Kernel Parameters</h4>
+                                <p>Add to your bootloader (GRUB/systemd-boot):</p>
+                                <pre><code>nvidia_drm.modeset=1 nvidia_drm.fbdev=1</code></pre>
+
+                                <h4>Environment Variables</h4>
+                                <p>Add to <code>~/.config/hypr/hyprland.conf</code> or <code>/etc/environment</code>:</p>
+                                <pre><code>env = LIBVA_DRIVER_NAME,nvidia
+env = __GLX_VENDOR_LIBRARY_NAME,nvidia
+env = WLR_NO_HARDWARE_CURSORS,1
+env = GBM_BACKEND,nvidia-drm
+env = __GL_GSYNC_ALLOWED,0
+env = __GL_VRR_ALLOWED,0</code></pre>
+                            </div>
+
+                            <div class="driver-panel" data-driver="vm">
+                                <h3>Virtual Machines</h3>
+                                <pre><code># For QEMU/KVM with virtio-gpu
+sudo pacman -S mesa qemu-guest-agent
+
+# For VirtualBox
+sudo pacman -S virtualbox-guest-utils mesa
+sudo systemctl enable vboxservice</code></pre>
+                                <p>Enable 3D acceleration in VM settings. Wayland works best with virtio-gpu (QEMU) or VMSVGA (VirtualBox).</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="essential-packages" class="guide-section">
+                        <h2>Essential Packages</h2>
+                        <p>Install the core packages needed for a functional Hyprland desktop:</p>
+
+                        <h3>Core Hyprland Ecosystem</h3>
+                        <pre><code>sudo pacman -S hyprland waybar wofi swaybg swaylock-effects \
+    grim slurp swappy cliphist wl-clipboard \
+    polkit-gnome gnome-keyring \
+    pipewire wireplumber pipewire-pulse pipewire-alsa \
+    brightnessctl playerctl pamixer \
+    xdg-desktop-portal-hyprland xdg-desktop-portal-gtk \
+    qt5-wayland qt6-wayland \
+    rofi-wayland</code></pre>
+
+                        <h3>Useful Utilities</h3>
+                        <pre><code>sudo pacman -S kitty thunar thunar-archive-plugin tumbler \
+    gvfs gvfs-mtp network-manager-applet \
+    blueman pavucontrol \
+    btop htop neovim git unzip \
+    ttf-jetbrains-mono ttf-nerd-fonts-symbols \
+    noto-fonts noto-fonts-emoji noto-fonts-cjk</code></pre>
+
+                        <h3>AUR Packages (Optional but Recommended)</h3>
+                        <pre><code># Hyprland plugins
+yay -S hyprland-plugins-git
+
+# Better rofi theme
+yay -S rofi-wayland
+
+# Animated wallpapers
+yay -S swww
+
+# Screen recording
+yay -S wf-recorder
+
+# Notification daemon
+yay -S swaync</code></pre>
+                    </section>
+
+                    <section id="configuration" class="guide-section">
+                        <h2>Basic Configuration</h2>
+                        <p>Hyprland configuration file is located at <code>~/.config/hypr/hyprland.conf</code>. Copy the example config first:</p>
+                        <pre><code>mkdir -p ~/.config/hypr
+cp /usr/share/hyprland/hyprland.conf ~/.config/hypr/hyprland.conf</code></pre>
+
+                        <h3>Essential Configuration Sections</h3>
+
+                        <h4>Monitor Configuration</h4>
+                        <pre><code>monitor=,preferred,auto,1
+# For multiple monitors:
+# monitor=eDP-1,1920x1080@60,0x0,1
+# monitor=HDMI-A-1,2560x1440@144,1920x0,1</code></pre>
+
+                        <h4>Input Configuration</h4>
+                        <pre><code>input {
+    kb_layout = us
+    kb_variant =
+    kb_model =
+    kb_options =
+    kb_rules =
+
+    follow_mouse = 1
+    touchpad {
+        natural_scroll = true
+        tap-to-click = true
+        tap-and-drag = true
+    }
+}</code></pre>
+
+                        <h4>Appearance (Gaps, Borders, Blur)</h4>
+                        <pre><code>general {
+    gaps_in = 5
+    gaps_out = 10
+    border_size = 2
+    col.active_border = rgba(ff6ec7ee) rgba(8b5cffee) 45deg
+    col.inactive_border = rgba(1a1a2eee)
+    layout = dwindle
+    allow_tearing = false
+}
+
+decoration {
+    rounding = 10
+    blur {
+        enabled = true
+        size = 8
+        passes = 3
+        new_optimizations = true
+    }
+    drop_shadow = true
+    shadow_range = 4
+    shadow_render_power = 3
+    col.shadow = rgba(1a1a2eaa)
+}</code></pre>
+
+                        <h4>Animations</h4>
+                        <pre><code>animations {
+    enabled = true
+    bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+    bezier = linear, 0, 0, 1, 1
+    animation = windows, 1, 7, myBezier
+    animation = windowsOut, 1, 7, myBezier, popin 80%
+    animation = border, 1, 10, linear
+    animation = borderangle, 1, 8, linear
+    animation = fade, 1, 7, linear
+    animation = workspaces, 1, 6, linear
+}</code></pre>
+                    </section>
+
+                    <section id="waybar" class="guide-section">
+                        <h2>Waybar Configuration</h2>
+                        <p>Waybar is the most popular status bar for Hyprland. Create the config directory:</p>
+                        <pre><code>mkdir -p ~/.config/waybar</code></pre>
+
+                        <h3>Basic Config (<code>~/.config/waybar/config.jsonc</code>)</h3>
+                        <pre><code>{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["clock"],
+    "modules-right": ["pulseaudio", "network", "battery", "tray"],
+
+    "hyprland/workspaces": {
+        "disable_special_workspace": true,
+        "format": "{icon}",
+        "format-icons": {
+            "1": "1", "2": "2", "3": "3", "4": "4", "5": "5",
+            "6": "6", "7": "7", "8": "8", "9": "9", "10": "10"
+        }
+    },
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "format-alt": "{:%Y-%m-%d %H:%M:%S}"
+    },
+
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}🎧",
+        "format-muted": "Muted {icon}",
+        "format-icons": {
+            "headphone": "🎧",
+            "hands-free": "🎧",
+            "headset": "🎧",
+            "phone": "📞",
+            "portable": "📱",
+            "car": "🚗",
+            "default": ["🔈", "🔉", "🔊"]
+        }
+    },
+
+    "network": {
+        "format": "{icon}",
+        "format-wifi": "WiFi {signalStrength}%",
+        "format-ethernet": "Wired",
+        "format-disconnected": "Offline"
+    },
+
+    "battery": {
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ⚡",
+        "format-plugged": "{capacity}% 🔌",
+        "format-icons": ["🔋", "🔋", "🔋", "🔋", "🔋"]
+    },
+
+    "tray": {
+        "icon-size": 16
+    }
+}</code></pre>
+
+                        <h3>Waybar Style (<code>~/.config/waybar/style.css</code>)</h3>
+                        <pre><code>* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrains Mono", "Font Awesome 6";
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: rgba(26, 26, 46, 0.9);
+    color: #eaeaf0;
+    border-bottom: 2px solid #ff6ec7;
+}
+
+#workspaces button {
+    padding: 0 10px;
+    color: #b4b4cc;
+}
+
+#workspaces button.active {
+    color: #ff6ec7;
+    background: rgba(255, 110, 199, 0.1);
+}
+
+#clock, #pulseaudio, #network, #battery, #tray {
+    padding: 0 15px;
+    margin: 0 4px;
+}
+
+#tray {
+    padding-right: 20px;
+}
+
+tooltip {
+    background: #16213e;
+    border: 1px solid #2a3a5a;
+    border-radius: 8px;
+}</code></pre>
+                    </section>
+
+                    <section id="theming" class="guide-section">
+                        <h2>Theming</h2>
+
+                        <h3>Popular Color Schemes</h3>
+                        <div class="option-cards">
+                            <div class="option-card">
+                                <h4>Catppuccin Mocha</h4>
+                                <pre><code>$ catppuccin-mocha:
+  rosewater: "#f5e0dc"
+  flamingo: "#f2cdcd"
+  pink: "#f5c2e7"
+  mauve: "#cba6f7"
+  red: "#f38ba8"
+  maroon: "#eba0ac"
+  peach: "#fab387"
+  yellow: "#f9e2af"
+  green: "#a6e3a1"
+  teal: "#94e2d5"
+  sky: "#89dceb"
+  sapphire: "#74c7ec"
+  blue: "#89b4fa"
+  lavender: "#b4befe"
+  text: "#cdd6f4"
+  subtext1: "#bac2de"
+  subtext0: "#a6adc8"
+  overlay2: "#9399b2"
+  overlay1: "#7f849c"
+  overlay0: "#6c7086"
+  surface2: "#585b70"
+  surface1: "#45475a"
+  surface0: "#313244"
+  base: "#1e1e2e"
+  mantle: "#181825"
+  crust: "#11111b"</code></pre>
+                            </div>
+                            <div class="option-card">
+                                <h4>Tokyo Night</h4>
+                                <pre><code>$ tokyo-night:
+  bg: "#1a1b26"
+  bg_dark: "#16161e"
+  bg_highlight: "#292e42"
+  fg: "#c0caf5"
+  fg_dark: "#a9b1d6"
+  blue: "#7aa2f7"
+  cyan: "#7dcfff"
+  green: "#9ece6a"
+  magenta: "#bb9af7"
+  orange: "#ff9e64"
+  purple: "#9d7cd8"
+  red: "#f7768e"
+  yellow: "#e0af68"</code></pre>
+                            </div>
+                            <div class="option-card">
+                                <h4>Nord</h4>
+                                <pre><code>$ nord:
+  polar_night_1: "#2e3440"
+  polar_night_2: "#3b4252"
+  polar_night_3: "#434c5e"
+  polar_night_4: "#4c566a"
+  snow_storm_1: "#d8dee9"
+  snow_storm_2: "#e5e9f0"
+  snow_storm_3: "#eceff4"
+  frost_1: "#8fbcbb"
+  frost_2: "#88c0d0"
+  frost_3: "#81a1c1"
+  frost_4: "#5e81ac"
+  red: "#bf616a"
+  orange: "#d08770"
+  yellow: "#ebcb8b"
+  green: "#a3be8c"
+  purple: "#b48ead"</code></pre>
+                            </div>
+                        </div>
+
+                        <h3>GTK Theme Integration</h3>
+                        <p>For consistent theming across GTK apps:</p>
+                        <pre><code># Install themes
+yay -S catppuccin-gtk-theme-mocha
+# or
+yay -S tokyo-night-gtk-theme
+# or
+sudo pacman -S adw-gtk-theme
+
+# Apply via gsettings or nwg-look
+yay -S nwg-look</code></pre>
+
+                        <h3>Hyprland Color Config (Catppuccin Example)</h3>
+                        <pre><code># In hyprland.conf
+general {
+    col.active_border = rgba(f5c2e7ee) rgba(cba6f7ee) 45deg
+    col.inactive_border = rgba(313244ee)
+}
+
+decoration {
+    col.shadow = rgba(11111baa)
+}</code></pre>
+                    </section>
+
+                    <section id="autostart" class="guide-section">
+                        <h2>Autostart Applications</h2>
+                        <p>Add to your <code>hyprland.conf</code>:</p>
+                        <pre><code>exec-once = waybar &
+exec-once = swaybg -i ~/.config/hypr/wallpaper.jpg &
+exec-once = swaync &
+exec-once = nm-applet --indicator &
+exec-once = blueman-applet &
+exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+# For clipboard history
+exec-once = cliphist store &
+
+# For idle management
+exec-once = swayidle -w \
+    timeout 300 'swaylock -f -c 1a1a2e' \
+    timeout 600 'hyprctl dispatch dpms off' \
+    resume 'hyprctl dispatch dpms on' &</code></pre>
+                    </section>
+
+                    <section id="troubleshooting" class="guide-section">
+                        <h2>Common Issues</h2>
+
+                        <h3>Hyprland won't start / Black screen</h3>
+                        <ul>
+                            <li>Check GPU drivers are installed correctly</li>
+                            <li>Ensure you're not running as root</li>
+                            <li>Check <code>hyprland</code> command output for errors</li>
+                            <li>Try <code>Hyprland</code> (capital H) from TTY</li>
+                        </ul>
+
+                        <h3>No wallpaper / Black background</h3>
+                        <pre><code># Install swaybg
+sudo pacman -S swaybg
+
+# Set wallpaper
+swaybg -i /path/to/wallpaper.jpg -m fill</code></pre>
+
+                        <h3>Audio not working</h3>
+                        <pre><code># Ensure PipeWire is running
+systemctl --user enable --now pipewire wireplumber pipewire-pulse
+
+# Check status
+wpctl status</code></pre>
+
+                        <h3>Screen tearing</h3>
+                        <p>Add to hyprland.conf:</p>
+                        <pre><code>general {
+    allow_tearing = false
+}</code></pre>
+                        <p>For NVIDIA, ensure <code>nvidia_drm.modeset=1</code> is in kernel parameters.</p>
+
+                        <h3>External monitor not detected</h3>
+                        <pre><code># Check available monitors
+hyprctl monitors
+
+# Manually configure
+monitor=HDMI-A-1,preferred,auto,1</code></pre>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../index.html" class="logo">
+                        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                            <path d="M6 7h12M6 11h8M6 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        </svg>
+                        <span class="logo-text">HyprRice</span>
+                    </a>
+                    <p>Your comprehensive guide to ricing Hyprland on Arch Linux and NixOS</p>
+                </div>
+                <nav class="footer-nav">
+                    <div class="footer-section">
+                        <h4>Guides</h4>
+                        <ul>
+                            <li><a href="arch-guide.html">Arch Linux Guide</a></li>
+                            <li><a href="nixos-guide.html">NixOS Guide</a></li>
+                            <li><a href="config.html">Configuration</a></li>
+                            <li><a href="plugins.html">Plugins & Tools</a></li>
+                            <li><a href="troubleshooting.html">Troubleshooting</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Community</h4>
+                        <ul>
+                            <li><a href="gallery.html">Gallery</a></li>
+                            <li><a href="https://discord.gg/hyprland" target="_blank">Discord</a></li>
+                            <li><a href="https://reddit.com/r/hyprland" target="_blank">r/hyprland</a></li>
+                            <li><a href="https://reddit.com/r/unixporn" target="_blank">r/unixporn</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="https://wiki.hyprland.org/" target="_blank">Hyprland Wiki</a></li>
+                            <li><a href="https://wiki.archlinux.org/" target="_blank">Arch Wiki</a></li>
+                            <li><a href="https://nixos.wiki/" target="_blank">NixOS Wiki</a></li>
+                            <li><a href="https://github.com/hyprwm/Hyprland" target="_blank">GitHub</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 HyprRice Guide. Built with <span class="heart">♥</span> for the ricing community.</p>
+                <p class="footer-note">Not affiliated with Hyprland, Arch Linux, or NixOS Foundation.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/navigation.js"></script>
+    <script>
+        // Driver tab switching
+        document.querySelectorAll('.driver-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const driver = tab.dataset.driver;
+                document.querySelectorAll('.driver-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.driver-panel').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.querySelector(`.driver-panel[data-driver="${driver}"]`).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

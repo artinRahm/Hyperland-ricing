@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Troubleshooting common Hyprland issues - crashes, performance, GPU, Wayland apps, and more">
+    <meta name="theme-color" content="#fafafa">
+    <title>Troubleshooting - Hyprland Ricing Guide</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </div>
+
+    <header class="site-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                    <path d="M6 7h12M6 11h8M6 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                </svg>
+                <span class="logo-text">HyprRice</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="arch-guide.html">Arch Linux</a></li>
+                <li><a href="nixos-guide.html">NixOS</a></li>
+                <li><a href="config.html">Configuration</a></li>
+                <li><a href="plugins.html">Plugins & Tools</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="troubleshooting.html" class="active">Troubleshooting</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="guide-layout">
+            <aside class="guide-sidebar" id="guideSidebar">
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <nav class="sidebar-nav">
+                    <ul class="sidebar-links">
+                        <li><a href="#getting-help" class="sidebar-link">Getting Help</a></li>
+                        <li><a href="#startup-issues" class="sidebar-link">Startup Issues</a></li>
+                        <li><a href="#gpu-drivers" class="sidebar-link">GPU Drivers</a></li>
+                        <li><a href="#performance" class="sidebar-link">Performance</a></li>
+                        <li><a href="#wayland-apps" class="sidebar-link">Wayland Apps</a></li>
+                        <li><a href="#audio" class="sidebar-link">Audio Issues</a></li>
+                        <li><a href="#input" class="sidebar-link">Input/Keyboard</a></li>
+                        <li><a href="#monitors" class="sidebar-link">Multi-Monitor</a></li>
+                        <li><a href="#nixos" class="sidebar-link">NixOS Specific</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <div class="guide-content">
+                <header class="page-header">
+                    <div class="container">
+                        <span class="badge badge-troubleshooting" style="margin-bottom: var(--space-md);">Troubleshooting</span>
+                        <h1>Troubleshooting Guide</h1>
+                        <p>Solutions for common Hyprland issues and how to debug problems</p>
+                    </div>
+                </header>
+
+                <div class="container">
+                    <section id="getting-help" class="guide-section">
+                        <h2>Getting Help</h2>
+                        <p>Before troubleshooting, gather information:</p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span>Debug info commands</span></div>
+                            <pre><code># Hyprland version and config
+hyprctl version
+hyprctl monitors
+hyprctl clients
+hyprctl workspaces
+hyprctl devices
+
+# Check logs
+journalctl -u hyprland -f
+# Or if started manually
+hyprland -d 2>&1 | tee hyprland.log
+
+# System info
+inxi -G
+glxinfo | grep -i opengl
+vulkaninfo | grep -i device</code></pre>
+                        </div>
+
+                        <div class="card-grid">
+                            <article class="card">
+                                <h3>Official Resources</h3>
+                                <ul>
+                                    <li><a href="https://wiki.hyprland.org" target="_blank">Hyprland Wiki</a></li>
+                                    <li><a href="https://github.com/hyprwm/Hyprland/issues" target="_blank">GitHub Issues</a></li>
+                                    <li><a href="https://discord.gg/hyprland" target="_blank">Discord Server</a></li>
+                                    <li><a href="https://reddit.com/r/hyprland" target="_blank">Reddit Community</a></li>
+                                </ul>
+                            </article>
+                            <article class="card">
+                                <h3>When Reporting Bugs</h3>
+                                <ul>
+                                    <li>Hyprland version (<code>hyprctl version</code>)</li>
+                                    <li>GPU + driver version</li>
+                                    <li>Minimal config that reproduces issue</li>
+                                    <li>Steps to reproduce</li>
+                                    <li>Logs from <code>hyprland -d</code></li>
+                                </ul>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section id="startup-issues" class="guide-section">
+                        <h2>Startup Issues</h2>
+
+                        <h3>Hyprland Won't Start</h3>
+                        <div class="problem-solution">
+                            <div class="problem">
+                                <h4>Black screen / crashes immediately</h4>
+                            </div>
+                            <div class="solution">
+                                <h4>Solutions:</h4>
+                                <ol>
+                                    <li>Check you're on a TTY, not inside another DE</li>
+                                    <li>Ensure GPU drivers installed: <code>sudo pacman -S mesa vulkan-radeon</code> (AMD) or <code>nvidia</code> (NVIDIA)</li>
+                                    <li>Try: <code>Hyprland</code> from TTY (not via display manager)</li>
+                                    <li>Check <code>hyprctl version</code> works</li>
+                                    <li>Disable config: <code>mv ~/.config/hypr/hyprland.conf ~/.config/hypr/hyprland.conf.bak</code></li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <h3>"Failed to create EGL context"</h3>
+                        <div class="problem-solution">
+                            <div class="solution">
+                                <h4>Fix:</h4>
+                                <pre><code># AMD/Intel
+sudo pacman -S mesa libva-mesa-driver mesa-vdpau
+
+# NVIDIA
+sudo pacman -S nvidia nvidia-utils libva-nvidia-driver
+
+# Ensure user in video group
+sudo usermod -aG video $USER</code></pre>
+                            </div>
+                        </div>
+
+                        <h3>Config Syntax Errors</h3>
+                        <div class="problem-solution">
+                            <div class="solution">
+                                <h4>Validate config:</h4>
+                                <pre><code>hyprctl reload  # Shows errors if any
+# Or test without applying
+hyprctl -j getoption general:layout</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="gpu-drivers" class="guide-section">
+                        <h2>GPU Driver Issues</h2>
+
+                        <h3>NVIDIA Specific</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Required kernel parameters</span></div>
+                            <pre><code># /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT="... nvidia_drm.modeset=1 nvidia_drm.fbdev=1"
+
+# Then: sudo grub-mkconfig -o /boot/grub/grub.cfg</code></pre>
+                        </div>
+
+                        <div class="code-block">
+                            <div class="code-header"><span>Hyprland NVIDIA env vars</span></div>
+                            <pre><code>env = LIBVA_DRIVER_NAME,nvidia
+env = __GLX_VENDOR_LIBRARY_NAME,nvidia
+env = NVD_BACKEND,direct
+env = WLR_NO_HARDWARE_CURSORS,1
+env = WLR_DRM_NO_ATOMIC,1
+
+# For older cards (Kepler/Maxwell)
+# env = WLR_RENDERER_ALLOW_SOFTWARE,1</code></pre>
+                        </div>
+
+                        <h3>AMD/Intel</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Ensure packages installed</span></div>
+                            <pre><code># AMD
+sudo pacman -S mesa vulkan-radeon libva-mesa-driver mesa-vdpau
+
+# Intel
+sudo pacman -S mesa vulkan-intel libva-intel-driver intel-media-driver
+
+# Check
+glxinfo -B
+vulkaninfo --summary</code></pre>
+                        </div>
+
+                        <h3>Hybrid Graphics (Optimus)</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Setup</span></div>
+                            <pre><code># Install
+sudo pacman -S nvidia-prime optimus-manager
+
+# Or use envycontrol (AUR)
+# envycontrol -s hybrid
+
+# Hyprland config
+env = WLR_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1
+env = __GLX_VENDOR_LIBRARY_NAME,nvidia
+env = WLR_NO_HARDWARE_CURSORS,1</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="performance" class="guide-section">
+                        <h2>Performance Issues</h2>
+
+                        <h3>Low FPS / Stuttering</h3>
+                        <div class="problem-solution">
+                            <div class="solution">
+                                <h4>Checklist:</h4>
+                                <ul>
+                                    <li>Disable animations: <code>animations { enabled = no }</code></li>
+                                    <li>Disable blur: <code>decoration { blur { enabled = no } }</code></li>
+                                    <li>Check VRR: <code>hyprctl monitors</code> - look for VRR: 1</li>
+                                    <li>Disable tear prevention: <code>general { allow_tearing = true }</code></li>
+                                    <li>Use <code>hyprctl setprop debug:damage_tracking 1</code> to visualize redraws</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>High CPU Usage</h3>
+                        <div class="problem-solution">
+                            <div class="solution">
+                                <h4>Common causes:</h4>
+                                <ul>
+                                    <li>Too many Waybar modules polling frequently</li>
+                                    <li>Animated wallpapers (hyprpaper with slideshow)</li>
+                                    <li>Shader-heavy Waybar CSS</li>
+                                    <li>Background processes polling hyprctl</li>
+                                </ul>
+                                <p>Profile with: <code>perf top -p $(pidof Hyprland)</code></p>
+                            </div>
+                        </div>
+
+                        <h3>Memory Leaks</h3>
+                        <div class="problem-solution">
+                            <div class="solution">
+                                <h4>Workarounds:</h4>
+                                <ul>
+                                    <li>Restart Hyprland periodically: <code>bind = $mainMod SHIFT, R, reload</code></li>
+                                    <li>Check for memory leaks in Waybar widgets</li>
+                                    <li>Update to latest Hyprland version</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="wayland-apps" class="guide-section">
+                        <h2>Wayland Application Issues</h2>
+
+                        <h3>Apps Not Using Wayland</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Force Wayland</span></div>
+                            <pre><code># Firefox
+# about:config -> widget.wayland-dmabuf-vaapi.enabled = true
+# MOZ_ENABLE_WAYLAND=1 firefox
+
+# Chrome/Electron
+# --enable-features=WaylandWindowDecorations --ozone-platform=wayland
+
+# Qt apps
+env = QT_QPA_PLATFORM,wayland
+env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
+
+# Java
+# _JAVA_AWT_WM_NONREPARENTING=1</code></pre>
+                        </div>
+
+                        <h3>XWayland Issues</h3>
+                        <div class="problem-solution">
+                            <div class="solution">
+                                <h4>Fixes:</h4>
+                                <ul>
+                                    <li>Install <code>xorg-xwayland</code></li>
+                                    <li>For games: <code>general { xwayland { force_zero_scaling = true } }</code></li>
+                                    <li>DPI issues: <code>env = GDK_SCALE,1</code> <code>env = GDK_DPI_SCALE,1</code></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Screen Sharing / Recording</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Required portals</span></div>
+                            <pre><code># Arch
+sudo pacman -S xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
+
+# NixOS
+xdg-desktop-portal-hyprland = {
+  enable = true;
+};
+
+# For browsers, restart after install
+# Check: xdg-desktop-portal --version</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="audio" class="guide-section">
+                        <h2>Audio Issues</h2>
+
+                        <h3>No Sound / PipeWire</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Install & Enable</span></div>
+                            <pre><code>sudo pacman -S pipewire wireplumber pipewire-pulse pipewire-alsa pipewire-jack
+systemctl --user enable --now pipewire wireplumber
+
+# Check status
+wpctl status
+pactl info</code></pre>
+                        </div>
+
+                        <h3>Bluetooth Audio</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Setup</span></div>
+                            <pre><code>sudo pacman -S bluez bluez-utils blueman
+sudo systemctl enable --now bluetooth
+# Add user to bluetooth group if needed
+sudo usermod -aG bluetooth $USER</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="input" class="guide-section">
+                        <h2>Input & Keyboard Issues</h2>
+
+                        <h3>Keyboard Layout Not Working</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Hyprland config</span></div>
+                            <pre><code>input {
+    kb_layout = us,de
+    kb_variant = ,nodeadkeys
+    kb_options = grp:alt_shift_toggle,caps:escape
+    kb_model = pc105
+    kb_repeat_rate = 25
+    kb_repeat_delay = 250
+}</code></pre>
+                        </div>
+
+                        <h3>Caps Lock as Escape</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Options</span></div>
+                            <pre><code># In input section
+kb_options = caps:escape          # Caps = Escape
+kb_options = caps:swapescape      # Swap Caps & Escape
+kb_options = ctrl:nocaps          # Caps = Ctrl</code></pre>
+                        </div>
+
+                        <h3>Mouse/Touchpad Not Working</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Libinput config</span></div>
+                            <pre><code>input {
+    sensitivity = 0
+    accel_profile = flat
+    tap-to-click = true
+    natural_scroll = true
+    scroll_factor = 1
+    scroll_method = two_finger
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="monitors" class="guide-section">
+                        <h2>Multi-Monitor Issues</h2>
+
+                        <h3>Monitor Not Detected</h3>
+                        <div class="problem-solution">
+                            <div class="solution">
+                                <h4>Debug:</h4>
+                                <pre><code># List all outputs
+hyprctl monitors -j
+ls /sys/class/drm/
+
+# Force enable
+monitor=HDMI-A-1,preferred,auto,1
+
+# Check kernel
+dmesg | grep -i drm</code></pre>
+                            </div>
+                        </div>
+
+                        <h3>Wrong Resolution/Refresh Rate</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Explicit config</span></div>
+                            <pre><code>monitor=HDMI-A-1,2560x1440@144,0x0,1
+monitor=eDP-1,1920x1080@60,2560x0,1
+
+# Get available modes
+cat /sys/class/drm/card0-HDMI-A-1/modes</code></pre>
+                        </div>
+
+                        <h3>Different DPI Per Monitor</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Scaling</span></div>
+                            <pre><code>monitor=eDP-1,preferred,auto,1.5
+monitor=DP-1,3840x2160@60,0x0,2
+
+# For XWayland apps
+env = GDK_SCALE,2
+env = GDK_DPI_SCALE,0.5</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="nixos" class="guide-section">
+                        <h2>NixOS Specific Issues</h2>
+
+                        <h3>Hyprland Not in Session List</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>configuration.nix</span></div>
+                            <pre><code>services.xserver.displayManager.greetd = {
+  enable = true;
+  defaultSession = {
+    command = "Hyprland";
+    user = "youruser";
+  };
+};
+
+# Or for SDDM
+services.xserver.displayManager.sddm = {
+  enable = true;
+  wayland = true;
+};</code></pre>
+                        </div>
+
+                        <h3>Home Manager Not Applying</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Flake setup</span></div>
+                            <pre><code># flake.nix
+homeConfigurations."user@host" = homeManagerConfiguration {
+  pkgs = pkgs;
+  modules = [ ./home.nix ];
+};
+
+# Rebuild
+sudo nixos-rebuild switch --flake .#hostname
+home-manager switch --flake .#user@host</code></pre>
+                        </div>
+
+                        <h3>Missing Fonts in Waybar/Rofi</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Add to home.nix</span></div>
+                            <pre><code>fonts.packages = with pkgs; [
+  jetbrains-mono
+  noto-fonts
+  noto-fonts-emoji
+  font-awesome
+];
+
+# Or system-wide
+fonts.fonts = with pkgs; [ jetbrains-mono noto-fonts-emoji ];</code></pre>
+                        </div>
+
+                        <h3>Hyprland Plugins Not Loading</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Hyprland plugins</span></div>
+                            <pre><code># flake.nix
+hyprland = {
+  enable = true;
+  package = pkgs.hyprland.withPlugins (p: with p; [
+    hyprland-dynamic-cursors
+    hyprland-autoname-workspaces
+  ]);
+};</code></pre>
+                        </div>
+                    </section>
+
+                    <section class="guide-section">
+                        <h2>Quick Reference Card</h2>
+                        <div class="card-grid">
+                            <article class="card">
+                                <h3>Essential Commands</h3>
+                                <pre><code>hyprctl reload              # Reload config
+hyprctl monitors           # List monitors
+hyprctl clients            # List windows
+hyprctl workspaces         # List workspaces
+hyprctl devices            # Input devices
+hyprctl version            # Version info
+hyprctl dispatch ...       # Send commands
+hyprctl keyword ...        # Set options live
+hyprctl getoption ...      # Get current value</code></pre>
+                            </article>
+                            <article class="card">
+                                <h3>Useful Keybindings</h3>
+                                <pre><code>$mainMod + Q        # Close window
+$mainMod + Return   # Terminal
+$mainMod + D        # App launcher
+$mainMod + Shift+R  # Reload config
+$mainMod + F        # Fullscreen
+$mainMod + Shift+F  # Fake fullscreen
+$mainMod + Shift+Space # Toggle float
+$mainMod + Mouse    # Move window
+$mainMod+Shift+Mouse # Resize window</code></pre>
+                            </article>
+                            <article class="card">
+                                <h3>Log Locations</h3>
+                                <pre><code># Systemd
+journalctl -u hyprland -f
+journalctl --user -u hyprland -f
+
+# Manual start
+Hyprland 2>&1 | tee ~/hyprland.log
+
+# XDG
+$XDG_STATE_HOME/hypr/
+$XDG_RUNTIME_DIR/hypr/</code></pre>
+                            </article>
+                            <article class="card">
+                                <h3>Config Files</h3>
+                                <pre><code>~/.config/hypr/hyprland.conf    # Main config
+~/.config/hypr/hyprlock.conf     # Lock screen
+~/.config/hypr/hypridle.conf     # Idle daemon
+~/.config/hypr/hyprpaper.conf    # Wallpaper
+~/.config/waybar/config.jsonc    # Waybar
+~/.config/waybar/style.css       # Waybar CSS
+~/.config/rofi/config.rasi       # Rofi</code></pre>
+                            </article>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../index.html" class="logo">
+                        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                            <path d="M6 7h12M6 11h8M6 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        </svg>
+                        <span class="logo-text">HyprRice</span>
+                    </a>
+                    <p>The ultimate guide to ricing Hyprland on Arch Linux and NixOS</p>
+                </div>
+                <nav class="footer-nav">
+                    <h4>Guides</h4>
+                    <ul>
+                        <li><a href="arch-guide.html">Arch Linux</a></li>
+                        <li><a href="nixos-guide.html">NixOS</a></li>
+                        <li><a href="config.html">Configuration</a></li>
+                        <li><a href="plugins.html">Plugins & Tools</a></li>
+                    </ul>
+                </nav>
+                <nav class="footer-nav">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="troubleshooting.html">Troubleshooting</a></li>
+                        <li><a href="https://wiki.hyprland.org" target="_blank">Hyprland Wiki</a></li>
+                        <li><a href="https://github.com/hyprwm/Hyprland" target="_blank">GitHub</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 HyprRice. Built with Hyprland.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/navigation.js"></script>
+</body>
+</html>

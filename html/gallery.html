@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hyprland rice gallery - screenshots and configurations from the community">
+    <meta name="theme-color" content="#fafafa">
+    <title>Gallery - Hyprland Ricing Guide</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </div>
+
+    <header class="site-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                    <path d="M6 7h12M6 11h8M6 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                </svg>
+                <span class="logo-text">HyprRice</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="arch-guide.html">Arch Linux</a></li>
+                <li><a href="nixos-guide.html">NixOS</a></li>
+                <li><a href="config.html">Configuration</a></li>
+                <li><a href="plugins.html">Plugins & Tools</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <header class="page-header">
+            <div class="container">
+                <span class="badge badge-gallery" style="margin-bottom: var(--space-md);">Gallery</span>
+                <h1>Hyprland Rice Gallery</h1>
+                <p>Inspiration from the community - themes, layouts, and configurations</p>
+            </div>
+        </header>
+
+        <div class="container">
+            <section class="guide-section">
+                <h2>Popular Themes</h2>
+                <p>Pre-configured color schemes that work beautifully with Hyprland.</p>
+
+                <div class="card-grid">
+                    <article class="card">
+                        <div class="card-thumb catppuccin"></div>
+                        <div class="card-content">
+                            <h3>Catppuccin</h3>
+                            <p class="card-meta">Soothing pastel theme</p>
+                            <p>Available in 4 flavors: Latte, Frappé, Macchiato, Mocha. Excellent GTK/Qt integration.</p>
+                            <div class="card-tags">
+                                <span class="tag">GTK</span>
+                                <span class="tag">Qt</span>
+                                <span class="tag">Waybar</span>
+                                <span class="tag">Rofi</span>
+                            </div>
+                            <a href="https://github.com/catppuccin/catppuccin" target="_blank" class="btn btn-sm btn-secondary">View Theme</a>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-thumb tokyonight"></div>
+                        <div class="card-content">
+                            <h3>Tokyo Night</h3>
+                            <p class="card-meta">Dark VS Code inspired</p>
+                            <p>Storm, Night, Moon, and Day variants. Great for late-night coding sessions.</p>
+                            <div class="card-tags">
+                                <span class="tag">GTK</span>
+                                <span class="tag">Kitty</span>
+                                <span class="tag">Waybar</span>
+                            </div>
+                            <a href="https://github.com/folke/tokyonight.nvim" target="_blank" class="btn btn-sm btn-secondary">View Theme</a>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-thumb nord"></div>
+                        <div class="card-content">
+                            <h3>Nord</h3>
+                            <p class="card-meta">Arctic, north-bluish</p>
+                            <p>Clean, minimal color palette inspired by the beauty of the arctic.</p>
+                            <div class="card-tags">
+                                <span class="tag">GTK</span>
+                                <span class="tag">Qt</span>
+                                <span class="tag">Alacritty</span>
+                            </div>
+                            <a href="https://www.nordtheme.com/" target="_blank" class="btn btn-sm btn-secondary">View Theme</a>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-thumb gruvbox"></div>
+                        <div class="card-content">
+                            <h3>Gruvbox</h3>
+                            <p class="card-meta">Retro groove colors</p>
+                            <p>Warm, earthy tones with light and dark variants. Classic developer favorite.</p>
+                            <div class="card-tags">
+                                <span class="tag">GTK</span>
+                                <span class="tag">Vim</span>
+                                <span class="tag">Terminal</span>
+                            </div>
+                            <a href="https://github.com/morhetz/gruvbox" target="_blank" class="btn btn-sm btn-secondary">View Theme</a>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-thumb dracula"></div>
+                        <div class="card-content">
+                            <h3>Dracula</h3>
+                            <p class="card-meta">Dark theme for everything</p>
+                            <p>Consistent across 270+ applications. Purple-centric with great contrast.</p>
+                            <div class="card-tags">
+                                <span class="tag">GTK</span>
+                                <span class="tag">Terminal</span>
+                                <span class="tag">Rofi</span>
+                            </div>
+                            <a href="https://draculatheme.com/" target="_blank" class="btn btn-sm btn-secondary">View Theme</a>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-thumb everforest"></div>
+                        <div class="card-content">
+                            <h3>Everforest</h3>
+                            <p class="card-meta">Natural green palette</p>
+                            <p>Soft, natural colors inspired by forests. Medium and hard contrast variants.</p>
+                            <div class="card-tags">
+                                <span class="tag">GTK</span>
+                                <span class="tag">Kitty</span>
+                                <span class="tag">Neovim</span>
+                            </div>
+                            <a href="https://github.com/sainnhe/everforest" target="_blank" class="btn btn-sm btn-secondary">View Theme</a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="guide-section">
+                <h2>Layout Examples</h2>
+                <p>Common window management layouts and workflows.</p>
+
+                <div class="layout-grid">
+                    <article class="layout-card">
+                        <div class="layout-preview">
+                            <div class="mini-window tl"></div>
+                            <div class="mini-window tr"></div>
+                            <div class="mini-window bl"></div>
+                            <div class="mini-window br"></div>
+                        </div>
+                        <div class="layout-info">
+                            <h3>Grid (2x2)</h3>
+                            <p>Four equal windows. Great for monitoring multiple terminals or code + preview.</p>
+                            <code class="layout-keybind">$mainMod + g</code>
+                        </div>
+                    </article>
+
+                    <article class="layout-card">
+                        <div class="layout-preview">
+                            <div class="mini-window main"></div>
+                            <div class="mini-window side1"></div>
+                            <div class="mini-window side2"></div>
+                        </div>
+                        <div class="layout-info">
+                            <h3>Main + Stack</h3>
+                            <p>Main window takes 60-70%, others stack on side. Ideal for coding workflow.</p>
+                            <code class="layout-keybind">$mainMod + m</code>
+                        </div>
+                    </article>
+
+                    <article class="layout-card">
+                        <div class="layout-preview">
+                            <div class="mini-window left"></div>
+                            <div class="mini-window right"></div>
+                        </div>
+                        <div class="layout-info">
+                            <h3>Split Vertical</h3>
+                            <p>Two windows side by side. Perfect for editor + terminal or diff views.</p>
+                            <code class="layout-keybind">$mainMod + v</code>
+                        </div>
+                    </article>
+
+                    <article class="layout-card">
+                        <div class="layout-preview">
+                            <div class="mini-window top"></div>
+                            <div class="mini-window bottom"></div>
+                        </div>
+                        <div class="layout-info">
+                            <h3>Split Horizontal</h3>
+                            <p>Two windows stacked. Good for reading docs on top, coding below.</p>
+                            <code class="layout-keybind">$mainMod + h</code>
+                        </div>
+                    </article>
+
+                    <article class="layout-card">
+                        <div class="layout-preview">
+                            <div class="mini-window floating"></div>
+                        </div>
+                        <div class="layout-info">
+                            <h3>Floating</h3>
+                            <p>Free-floating windows for dialogs, calculators, media players.</p>
+                            <code class="layout-keybind">$mainMod + Shift + Space</code>
+                        </div>
+                    </article>
+
+                    <article class="layout-card">
+                        <div class="layout-preview">
+                            <div class="mini-window tab1 active"></div>
+                            <div class="mini-window tab2"></div>
+                            <div class="mini-window tab3"></div>
+                        </div>
+                        <div class="layout-info">
+                            <h3>Tabbed</h3>
+                            <p>Windows grouped in tabs. Switch with $mainMod + Tab.</p>
+                            <code class="layout-keybind">$mainMod + t</code>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="guide-section">
+                <h2>Community Rices</h2>
+                <p>Showcase of complete dotfile repositories from the community.</p>
+
+                <div class="rice-grid">
+                    <article class="rice-card">
+                        <div class="rice-header">
+                            <h3>Minimal Arch Rice</h3>
+                            <span class="rice-distro">Arch Linux</span>
+                        </div>
+                        <p>Clean, minimal setup with Catppuccin Mocha, Waybar, Rofi, and Hyprlock. No gaps, sharp corners.</p>
+                        <div class="rice-tools">
+                            <span class="tool">hyprland</span>
+                            <span class="tool">waybar</span>
+                            <span class="tool">rofi</span>
+                            <span class="tool">hyprlock</span>
+                            <span class="tool">hyprpaper</span>
+                        </div>
+                        <a href="https://github.com/" target="_blank" class="btn btn-sm btn-secondary">View Dotfiles</a>
+                    </article>
+
+                    <article class="rice-card">
+                        <div class="rice-header">
+                            <h3>NixOS Flake Rice</h3>
+                            <span class="rice-distro">NixOS</span>
+                        </div>
+                        <p>Fully declarative configuration with Home Manager. Tokyo Night theme, modular structure.</p>
+                        <div class="rice-tools">
+                            <span class="tool">hyprland</span>
+                            <span class="tool">waybar</span>
+                            <span class="tool">wofi</span>
+                            <span class="tool">swaync</span>
+                            <span class="tool">hypridle</span>
+                        </div>
+                        <a href="https://github.com/" target="_blank" class="btn btn-sm btn-secondary">View Dotfiles</a>
+                    </article>
+
+                    <article class="rice-card">
+                        <div class="rice-header">
+                            <h3>Gaming Setup</h3>
+                            <span class="rice-distro">Arch Linux</span>
+                        </div>
+                        <p>Optimized for gaming with VRR, HDR support, gamescope integration, and performance tweaks.</p>
+                        <div class="rice-tools">
+                            <span class="tool">hyprland</span>
+                            <span class="tool">gamescope</span>
+                            <span class="tool">mangohud</span>
+                            <span class="tool">waybar</span>
+                        </div>
+                        <a href="https://github.com/" target="_blank" class="btn btn-sm btn-secondary">View Dotfiles</a>
+                    </article>
+
+                    <article class="rice-card">
+                        <div class="rice-header">
+                            <h3>Developer Workstation</h3>
+                            <span class="rice-distro">Arch / NixOS</span>
+                        </div>
+                        <p>Multi-monitor setup with workspace per project, Neovim integration, and session management.</p>
+                        <div class="rice-tools">
+                            <span class="tool">hyprland</span>
+                            <span class="tool">waybar</span>
+                            <span class="tool">neovim</span>
+                            <span class="tool">tmux</span>
+                            <span class="tool">zellij</span>
+                        </div>
+                        <a href="https://github.com/" target="_blank" class="btn btn-sm btn-secondary">View Dotfiles</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="guide-section">
+                <h2>Share Your Rice</h2>
+                <p>Want to show off your configuration? Here's how to contribute:</p>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Prepare your dotfiles</h4>
+                            <p>Push your Hyprland config to a public GitHub repo with a README.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Take screenshots</h4>
+                            <p>Capture clean shots: desktop, busy (with apps open), and lockscreen.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Submit</h4>
+                            <p>Open a PR or issue on the HyprRice repo with your repo link and screenshots.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../index.html" class="logo">
+                        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                            <path d="M6 7h12M6 11h8M6 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        </svg>
+                        <span class="logo-text">HyprRice</span>
+                    </a>
+                    <p>The ultimate guide to ricing Hyprland on Arch Linux and NixOS</p>
+                </div>
+                <nav class="footer-nav">
+                    <h4>Guides</h4>
+                    <ul>
+                        <li><a href="arch-guide.html">Arch Linux</a></li>
+                        <li><a href="nixos-guide.html">NixOS</a></li>
+                        <li><a href="config.html">Configuration</a></li>
+                        <li><a href="plugins.html">Plugins & Tools</a></li>
+                    </ul>
+                </nav>
+                <nav class="footer-nav">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="troubleshooting.html">Troubleshooting</a></li>
+                        <li><a href="https://wiki.hyprland.org" target="_blank">Hyprland Wiki</a></li>
+                        <li><a href="https://github.com/hyprwm/Hyprland" target="_blank">GitHub</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 HyprRice. Built with Hyprland.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/navigation.js"></script>
+</body>
+</html>

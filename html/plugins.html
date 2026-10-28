@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Essential Hyprland plugins, tools, and utilities for ricing - Waybar, Rofi, Hyprpicker, and more">
+    <meta name="theme-color" content="#fafafa">
+    <title>Plugins & Tools - Hyprland Ricing Guide</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </div>
+
+    <header class="site-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                    <path d="M6 7h12M6 11h8M6 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                </svg>
+                <span class="logo-text">HyprRice</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="arch-guide.html">Arch Linux</a></li>
+                <li><a href="nixos-guide.html">NixOS</a></li>
+                <li><a href="config.html">Configuration</a></li>
+                <li><a href="plugins.html" class="active">Plugins & Tools</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="guide-layout">
+            <aside class="guide-sidebar" id="guideSidebar">
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <nav class="sidebar-nav">
+                    <ul class="sidebar-links">
+                        <li><a href="#waybar" class="sidebar-link">Waybar</a></li>
+                        <li><a href="#rofi" class="sidebar-link">Rofi / Wofi</a></li>
+                        <li><a href="#hyprlock" class="sidebar-link">Hyprlock</a></li>
+                        <li><a href="#hypridle" class="sidebar-link">Hypridle</a></li>
+                        <li><a href="#hyprpicker" class="sidebar-link">Hyprpicker</a></li>
+                        <li><a href="#hyprcursor" class="sidebar-link">Hyprcursor</a></li>
+                        <li><a href="#hyprpaper" class="sidebar-link">Hyprpaper</a></li>
+                        <li><a href="#notifications" class="sidebar-link">Notifications</a></li>
+                        <li><a href="#utilities" class="sidebar-link">Other Utilities</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <div class="guide-content">
+                <header class="page-header">
+                    <div class="container">
+                        <span class="badge badge-plugins" style="margin-bottom: var(--space-md);">Plugins & Tools</span>
+                        <h1>Essential Plugins & Tools</h1>
+                        <p>Complete your Hyprland setup with bars, launchers, lockscreens, and utilities</p>
+                    </div>
+                </header>
+
+                <div class="container">
+                    <section id="waybar" class="guide-section">
+                        <h2>Waybar</h2>
+                        <p>The most popular status bar for Wayland compositors. Highly customizable with CSS.</p>
+
+                        <h3>Installation</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Arch Linux</span></div>
+                            <pre><code>sudo pacman -S waybar</code></pre>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-header"><span>NixOS</span></div>
+                            <pre><code>waybar = {
+  enable = true;
+  package = pkgs.waybar;
+  settings = {
+    // config here
+  };
+};</code></pre>
+                        </div>
+
+                        <h3>Basic Configuration</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>config.jsonc</span></div>
+                            <pre><code>{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["hyprland/language", "clock"],
+    "modules-right": ["pulseaudio", "network", "battery", "cpu", "memory", "tray"],
+
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{icon}",
+        "format-icons": {
+            "1": "1", "2": "2", "3": "3", "4": "4", "5": "5",
+            "active": "{icon}",
+            "inactive": "{icon}",
+            "urgent": "{icon}"
+        }
+    },
+
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 50
+    },
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "format-alt": "{:%Y-%m-%d %H:%M:%S}",
+        "tooltip-format": "{:%A, %B %d, %Y}"
+    },
+
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-muted": "Muted",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        }
+    },
+
+    "network": {
+        "format-wifi": "{essid} ({signalStrength}%)",
+        "format-ethernet": "Connected",
+        "format-disconnected": "Disconnected",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
+    },
+
+    "battery": {
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% {icon}",
+        "format-plugged": "{capacity}% {icon}",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+
+    "cpu": {
+        "format": "{usage}%",
+        "tooltip": true
+    },
+
+    "memory": {
+        "format": "{}%",
+        "tooltip": true
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 10
+    }
+}</code></pre>
+                        </div>
+
+                        <h3>CSS Styling</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>style.css</span></div>
+                            <pre><code>* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrains Mono", "Font Awesome 6";
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: rgba(30, 30, 46, 0.9);
+    color: #cdd6f4;
+    transition: background-color 0.5s;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    color: #6c7086;
+    transition: all 0.3s;
+}
+
+#workspaces button.active {
+    color: #f5c2e7;
+    background: rgba(245, 194, 231, 0.1);
+}
+
+#workspaces button:hover {
+    background: rgba(245, 194, 231, 0.2);
+    color: #f5c2e7;
+}
+
+#clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray {
+    padding: 0 12px;
+    margin: 4px 4px;
+}
+
+#clock {
+    background: rgba(137, 220, 235, 0.1);
+    color: #89dceb;
+    border-radius: 12px;
+}
+
+#battery.charging {
+    color: #a6e3a1;
+}
+
+#battery.critical:not(.charging) {
+    color: #f38ba8;
+    animation: blink 0.5s linear infinite;
+}
+
+@keyframes blink {
+    to { background-color: #f38ba8; color: #1e1e2e; }
+}
+
+#tray {
+    background: rgba(245, 194, 231, 0.1);
+    border-radius: 12px;
+    margin-right: 8px;
+}
+
+tooltip {
+    background: #1e1e2e;
+    border-radius: 8px;
+    border: 1px solid #313244;
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="rofi" class="guide-section">
+                        <h2>Rofi / Wofi</h2>
+                        <p>Application launchers and window switchers.</p>
+
+                        <h3>Rofi (Recommended)</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Arch Linux</span></div>
+                            <pre><code>sudo pacman -S rofi</code></pre>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-header"><span>config.rasi</span></div>
+                            <pre><code>configuration {
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+    font: "JetBrains Mono 12";
+    theme: "catppuccin";
+}
+
+@theme "catppuccin"
+
+* {
+    background-color: #1e1e2eff;
+    text-color: #cdd6f4ff;
+    border-color: #313244ff;
+    selected-normal-background: #f5c2e7ff;
+    selected-normal-text: #1e1e2eff;
+    selected-urgent-background: #f38ba8ff;
+    selected-urgent-text: #1e1e2eff;
+}
+
+window {
+    width: 60%;
+    border-radius: 12px;
+    border: 2px solid #313244;
+}
+
+mainbox {
+    children: [inputbar, listview];
+}
+
+inputbar {
+    children: [prompt, entry];
+    padding: 12px;
+    spacing: 8px;
+}
+
+entry {
+    placeholder: "Search applications...";
+    placeholder-color: #6c7086;
+}
+
+listview {
+    lines: 10;
+    columns: 1;
+    spacing: 4px;
+    padding: 0 12px 12px;
+}
+
+element {
+    padding: 8px;
+    border-radius: 8px;
+}
+
+element-text {
+    horizontal-align: 0.5;
+}
+
+element-icon {
+    size: 24px;
+}</code></pre>
+                        </div>
+
+                        <h3>Wofi (GTK-based)</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Install</span></div>
+                            <pre><code>sudo pacman -S wofi</code></pre>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-header"><span>style.css</span></div>
+                            <pre><code>* {
+    font-family: "JetBrains Mono", sans-serif;
+    font-size: 14px;
+}
+
+window {
+    background-color: #1e1e2e;
+    border: 2px solid #313244;
+    border-radius: 12px;
+}
+
+#input {
+    background-color: #181825;
+    border: none;
+    border-bottom: 1px solid #313244;
+    padding: 12px;
+    color: #cdd6f4;
+}
+
+#input:focus {
+    outline: none;
+}
+
+#inner-box {
+    padding: 8px;
+}
+
+#outer-box {
+    margin: 8px;
+}
+
+#scroll {
+    margin: 0;
+}
+
+#text {
+    color: #cdd6f4;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+#text:selected {
+    background-color: #f5c2e7;
+    color: #1e1e2e;
+}
+
+#image {
+    margin-right: 12px;
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="hyprlock" class="guide-section">
+                        <h2>Hyprlock</h2>
+                        <p>Hyprland's native lockscreen. GPU-accelerated, highly customizable.</p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span>Install</span></div>
+                            <pre><code># Arch
+sudo pacman -S hyprlock
+
+# NixOS
+hyprlock = {
+  enable = true;
+  package = pkgs.hyprlock;
+};</code></pre>
+                        </div>
+
+                        <h3>Configuration</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>hyprlock.conf</span></div>
+                            <pre><code>background {
+    monitor =
+    path = ~/Pictures/wallpapers/lockscreen.jpg
+    color = #1e1e2e
+    size = cover
+    blur_passes = 3
+    blur_size = 8
+    noise = 0.0117
+    contrast = 1.0
+    brightness = 0.8
+    vibrancy = 0.169
+    vibrancy_darkness = 0.0
+}
+
+input-field {
+    monitor =
+    size = 300, 50
+    outline_thickness = 2
+    dots_size = 0.3
+    dots_spacing = 0.5
+    dots_center = true
+    dots_rounding = -1
+    outer_color = #f5c2e7
+    inner_color = #89dceb
+    font_color = #cdd6f4
+    font_size = 24
+    font_family = JetBrains Mono
+    placeholder_text = <INPUT_PASSWORD>
+    placeholder_font_color = #6c7086
+    hide_input = true
+    swap_font_color = #1e1e2e
+    swap_inner_color = #f5c2e7
+    check_keymap = true
+    keymap_text = {layout}
+    keymap_font_color = #cdd6f4
+    keymap_font_size = 14
+    keymap_font_family = JetBrains Mono
+    rounding = 12
+    inactive_inner_color = #313244
+    inactive_outer_color = #45475a
+    inactive_font_color = #6c7086
+}
+
+label {
+    monitor =
+    text = Hi, $USER
+    color = #cdd6f4
+    font_size = 32
+    font_family = JetBrains Mono
+    position = 0, -100
+    halign = center
+    valign = center
+}
+
+label {
+    monitor =
+    text = $(date +%H:%M)
+    color = #89dceb
+    font_size = 64
+    font_family = JetBrains Mono
+    position = 0, -30
+    halign = center
+    valign = center
+}
+
+label {
+    monitor =
+    text = $(date +%A, %B %d)
+    color = #6c7086
+    font_size = 18
+    font_family = JetBrains Mono
+    position = 0, 40
+    halign = center
+    valign = center
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="hypridle" class="guide-section">
+                        <h2>Hypridle</h2>
+                        <p>Idle daemon for Hyprland - handles sleep, lock, dpms.</p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span>hypridle.conf</span></div>
+                            <pre><code>general {
+    lock_cmd = hyprlock
+    before_sleep_cmd = loginctl lock-session
+    after_sleep_cmd = hyprctl dispatch dpms on
+}
+
+listener {
+    timeout = 300
+    on_timeout = hyprlock
+    on_resume = hyprctl dispatch dpms on
+}
+
+listener {
+    timeout = 600
+    on_timeout = hyprctl dispatch dpms off
+    on_resume = hyprctl dispatch dpms on
+}
+
+listener {
+    timeout = 1800
+    on_timeout = systemctl suspend
+    on_resume = hyprctl dispatch dpms on
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="hyprpicker" class="guide-section">
+                        <h2>Hyprpicker</h2>
+                        <p>Color picker for Hyprland. Pick colors from anywhere on screen.</p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span>Install</span></div>
+                            <pre><code># Arch
+sudo pacman -S hyprpicker
+
+# Usage
+hyprpicker -a  # copies to clipboard
+hyprpicker -r  # rgb format
+hyprpicker -f hex  # hex format</code></pre>
+                        </div>
+
+                        <h3>Keybinding</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>hyprland.conf</span></div>
+                            <pre><code>bind = $mainMod SHIFT, C, exec, hyprpicker -a</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="hyprcursor" class="guide-section">
+                        <h2>Hyprcursor</h2>
+                        <p>Cursor manager for Hyprland with theme support.</p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span>Config</span></div>
+                            <pre><code>env = HYPRCURSOR_THEME,Bibata-Modern-Classic
+env = HYPRCURSOR_SIZE,24
+
+# Or in hyprland.conf
+cursor {
+    theme = Bibata-Modern-Classic
+    size = 24
+    no_hardware_cursors = false
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="hyprpaper" class="guide-section">
+                        <h2>Hyprpaper</h2>
+                        <p>Wallpaper utility for Hyprland with multi-monitor support.</p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span>hyprpaper.conf</span></div>
+                            <pre><code>preload = ~/Pictures/wallpapers/wall1.jpg
+preload = ~/Pictures/wallpapers/wall2.png
+
+wallpaper = eDP-1,~/Pictures/wallpapers/wall1.jpg
+wallpaper = HDMI-A-1,~/Pictures/wallpapers/wall2.png
+
+# Random wallpaper on startup
+# wallpaper = ,~/Pictures/wallpapers/
+
+ipc = on
+splash = false</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="notifications" class="guide-section">
+                        <h2>Notifications</h2>
+                        <p>Notification daemons for Wayland.</p>
+
+                        <h3>SwayNC (Recommended)</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>Install</span></div>
+                            <pre><code># Arch
+sudo pacman -S swaync
+
+# NixOS
+swaync = {
+  enable = true;
+};</code></pre>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-header"><span>config.json</span></div>
+                            <pre><code>{
+    "positionX": "right",
+    "positionY": "top",
+    "layer": "overlay",
+    "control-center-layer": "overlay",
+    "layer-shell": true,
+    "cssPriority": "application",
+    "control-center-width": 400,
+    "control-center-height": 600,
+    "notification-window-width": 350,
+    "notification-icon-size": 48,
+    "notification-body-image-height": 100,
+    "notification-body-image-width": 200,
+    "timeout": 5,
+    "timeout-low": 3,
+    "timeout-critical": 0,
+    "fit-to-screen": true,
+    "max-actions": 3,
+    "notification-visibility": {
+        "example-name": {
+            "state": "dnd"
+        }
+    },
+    "keyboard-shortcuts": {
+        "close": "Escape",
+        "action": "Return",
+        "next": "j",
+        "previous": "k"
+    }
+}</code></pre>
+                        </div>
+
+                        <h3>Mako (Lightweight)</h3>
+                        <div class="code-block">
+                            <div class="code-header"><span>mako.conf</span></div>
+                            <pre><code>background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#313244
+
+width=350
+height=100
+margin=10
+padding=12
+border-size=2
+border-radius=12
+
+anchor=top-right
+
+default-timeout=5000
+
+ignore-timeout=0
+max-visible=5
+
+format=<b>%s</b>\n%b
+
+[urgency=low]
+background-color=#1e1e2e
+border-color=#313244
+
+[urgency=normal]
+background-color=#1e1e2e
+border-color=#89dceb
+
+[urgency=critical]
+background-color=#1e1e2e
+border-color=#f38ba8</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="utilities" class="guide-section">
+                        <h2>Other Essential Utilities</h2>
+
+                        <div class="card-grid">
+                            <article class="card">
+                                <h3>Grim + Slurp</h3>
+                                <p>Screenshot tools for Wayland.</p>
+                                <pre><code>sudo pacman -S grim slurp</code></pre>
+                            </article>
+                            <article class="card">
+                                <h3>wl-clipboard</h3>
+                                <p>Clipboard utilities (wl-copy, wl-paste).</p>
+                                <pre><code>sudo pacman -S wl-clipboard</code></pre>
+                            </article>
+                            <article class="card">
+                                <h3>Polkit Agent</h3>
+                                <p>GUI authentication dialogs.</p>
+                                <pre><code>sudo pacman -S polkit-gnome</code></pre>
+                            </article>
+                            <article class="card">
+                                <h3>Brightness Control</h3>
+                                <p>Screen brightness control.</p>
+                                <pre><code>sudo pacman -S brightnessctl</code></pre>
+                            </article>
+                            <article class="card">
+                                <h3>Bluetooth</h3>
+                                <p>Blueman or bluez + bluetuith.</p>
+                                <pre><code>sudo pacman -S blueman</code></pre>
+                            </article>
+                            <article class="card">
+                                <h3>Network Manager</h3>
+                                <p>NetworkManager + nm-applet or nmtui.</p>
+                                <pre><code>sudo pacman -S networkmanager</code></pre>
+                            </article>
+                            <article class="card">
+                                <h3>Audio</h3>
+                                <p>PipeWire + WirePlumber + pavucontrol.</p>
+                                <pre><code>sudo pacman -S pipewire wireplumber pavucontrol</code></pre>
+                            </article>
+                            <article class="card">
+                                <h3>GTK Theming</h3>
+                                <p>nwg-look or gnome-themes-extra.</p>
+                                <pre><code>sudo pacman -S nwg-look</code></pre>
+                            </article>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../index.html" class="logo">
+                        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                            <path d="M6 7h12M6 11h8M6 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        </svg>
+                        <span class="logo-text">HyprRice</span>
+                    </a>
+                    <p>The ultimate guide to ricing Hyprland on Arch Linux and NixOS</p>
+                </div>
+                <nav class="footer-nav">
+                    <h4>Guides</h4>
+                    <ul>
+                        <li><a href="arch-guide.html">Arch Linux</a></li>
+                        <li><a href="nixos-guide.html">NixOS</a></li>
+                        <li><a href="config.html">Configuration</a></li>
+                        <li><a href="plugins.html">Plugins & Tools</a></li>
+                    </ul>
+                </nav>
+                <nav class="footer-nav">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="troubleshooting.html">Troubleshooting</a></li>
+                        <li><a href="https://wiki.hyprland.org" target="_blank">Hyprland Wiki</a></li>
+                        <li><a href="https://github.com/hyprwm/Hyprland" target="_blank">GitHub</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 HyprRice. Built with Hyprland.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/navigation.js"></script>
+</body>
+</html>
